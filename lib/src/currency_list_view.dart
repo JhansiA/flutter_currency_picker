@@ -175,10 +175,10 @@ class _CurrencyListViewState extends State<CurrencyListView> {
       // so the ripple effect of InkWell will show on tap
       color: Colors.transparent,
       child: InkWell(
-        // onTap: () {
-        //   widget.onSelect(currency);
-        //   Navigator.pop(context);
-        // },
+        onTap: () {
+          widget.onSelect(currency);
+          // Navigator.pop(context);
+        },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 9.0, horizontal: 8.0),
           child: Row(
@@ -225,10 +225,11 @@ class _CurrencyListViewState extends State<CurrencyListView> {
                 child: Checkbox(
                   checkColor: Colors.lightBlueAccent,
                   value: isChecked,
-                  onChanged: (bool? value) {
+                  onChanged: (bool? newvalue) {
                     setState(() {
-                      isChecked = value!;
+                      isChecked = newvalue!;
                     });
+                    print(isChecked);
                   },
                 ),
               ),
