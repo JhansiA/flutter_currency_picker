@@ -62,7 +62,7 @@ class CurrencyListView extends StatefulWidget {
     this.currencyFilter,
     this.showSearchField = true,
     this.searchHint,
-    this.showCurrencyCode = true,
+    this.showCurrencyCode = false,
     this.showCurrencyName = true,
     this.showFlag = true,
     this.physics,
@@ -80,7 +80,7 @@ class _CurrencyListViewState extends State<CurrencyListView> {
   late List<Currency> _filteredList;
   late List<Currency> _currencyList;
   List<Currency>? _favoriteList;
-
+  bool isChecked = false;
   TextEditingController? _searchController;
 
   @override
@@ -118,6 +118,9 @@ class _CurrencyListViewState extends State<CurrencyListView> {
     return Column(
       children: <Widget>[
         const SizedBox(height: 12),
+        ListTile(leading: Icon(Icons.currency_exchange), title: Text('Add Currency'),
+        trailing: TextButton(child: Text('Done'),onPressed: (){Navigator.pop(context);},
+          style: TextButton.styleFrom(primary: Colors.lightBlueAccent),),),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           child: widget.showSearchField
@@ -125,7 +128,7 @@ class _CurrencyListViewState extends State<CurrencyListView> {
                   controller: _searchController,
                   decoration: InputDecoration(
                     labelText: widget.searchHint ?? "Search",
-                    hintText: widget.searchHint ?? "Search",
+                    hintText: widget.searchHint ?? "Country or Currency code ",
                     prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -143,7 +146,7 @@ class _CurrencyListViewState extends State<CurrencyListView> {
             children: [
               if (_favoriteList != null) ...[
                 ..._favoriteList!
-                    .map<Widget>((currency) => _listRow(currency))
+                    .map<Widget>((currency) => _listRow(currency,true))
                     .toList(),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -151,7 +154,7 @@ class _CurrencyListViewState extends State<CurrencyListView> {
                 ),
               ],
               ..._filteredList
-                  .map<Widget>((currency) => _listRow(currency))
+                  .map<Widget>((currency) => _listRow(currency,false))
                   .toList()
             ],
           ),
@@ -160,7 +163,8 @@ class _CurrencyListViewState extends State<CurrencyListView> {
     );
   }
 
-  Widget _listRow(Currency currency) {
+  Widget _listRow(Currency currency, bool isChecked) {
+
     final TextStyle _titleTextStyle =
         widget.theme?.titleTextStyle ?? _defaultTitleTextStyle;
     final TextStyle _subtitleTextStyle =
@@ -171,10 +175,10 @@ class _CurrencyListViewState extends State<CurrencyListView> {
       // so the ripple effect of InkWell will show on tap
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {
-          widget.onSelect(currency);
-          Navigator.pop(context);
-        },
+        // onTap: () {
+        //   widget.onSelect(currency);
+        //   Navigator.pop(context);
+        // },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 9.0, horizontal: 8.0),
           child: Row(
@@ -214,9 +218,18 @@ class _CurrencyListViewState extends State<CurrencyListView> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(
-                  currency.symbol,
-                  style: const TextStyle(fontSize: 18),
+                // child: Text(
+                //   currency.symbol,
+                //   style: const TextStyle(fontSize: 18),
+                // ),
+                child: Checkbox(
+                  checkColor: Colors.lightBlueAccent,
+                  value: isChecked,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      isChecked = value!;
+                    });
+                  },
                 ),
               ),
             ],

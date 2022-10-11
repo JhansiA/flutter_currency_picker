@@ -4,7 +4,7 @@ import 'currency.dart';
 import 'currency_list_view.dart';
 import 'currency_picker_theme_data.dart';
 
-void showCurrencyListBottomSheet({
+Future<dynamic> showCurrencyListBottomSheet({
   required BuildContext context,
   required ValueChanged<Currency> onSelect,
   List<String>? favorite,
@@ -13,7 +13,7 @@ void showCurrencyListBottomSheet({
   bool showSearchField = true,
   bool showFlag = true,
   bool showCurrencyName = true,
-  bool showCurrencyCode = true,
+  bool showCurrencyCode = false,
   ScrollPhysics? physics,
   CurrencyPickerThemeData? theme,
 }) {
@@ -22,7 +22,7 @@ void showCurrencyListBottomSheet({
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       );
 
-  showModalBottomSheet<dynamic>(
+  return showModalBottomSheet<dynamic>(
     context: context,
     isScrollControlled: true,
     shape: shape,

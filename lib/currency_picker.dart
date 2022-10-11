@@ -11,30 +11,6 @@ export 'package:currency_picker/src/currency_picker_theme_data.dart';
 export 'package:currency_picker/src/currency_service.dart';
 export 'package:currency_picker/src/currency_utils.dart';
 
-/// Show currency picker
-///
-///  `onSelect`: Called when a currency is select. The currency picker passes the new value to the callback (required)
-///  `showFlag`: Shows flag for each currency. Default value true (optional).
-///  `searchHint`: Option to customize hint of the search TextField (optional).
-///  `showCurrencyName`: Option to show/hide the currency name, default value true (optional).
-///  `showCurrencyCode`: Option to show/hide the currency code, default value true (optional).
-///  `currencyFilter`: Can be used to uses filter the Currency list (optional).
-///  `favorite`: The Currencies that will appear at the top of the list (optional).
-///  `theme`: can be used to customizing the country list bottom sheet (optional).
-///
-/// This example demonstrates how to use `showCurrencyPicker`
-/// ```dart
-/// showCurrencyPicker(
-///    context: context,
-///    showFlag: true,
-///    showCurrencyName: true,
-///    showCurrencyCode: true,
-///    onSelect: (Currency currency) {
-///       print('Select currency: ${currency.name}');
-///    },
-///    currencyFilter: <String>['EUR', 'GBP', 'USD', 'AUD', 'CAD', 'JPY', 'HKD', 'CHF', 'SEK', 'ILS'],
-/// );
-/// ```
 void showCurrencyPicker({
   required BuildContext context,
   required ValueChanged<Currency> onSelect,
@@ -44,7 +20,7 @@ void showCurrencyPicker({
   bool showSearchField = true,
   bool showFlag = true,
   bool showCurrencyName = true,
-  bool showCurrencyCode = true,
+  bool showCurrencyCode = false,
   ScrollPhysics? physics,
   CurrencyPickerThemeData? theme,
 }) {
