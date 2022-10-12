@@ -20,7 +20,7 @@ void showCurrencyPicker({
   bool showSearchField = true,
   bool showFlag = true,
   bool showCurrencyName = true,
-  bool showCurrencyCode = false,
+  bool showCurrencyCode = true,
   ScrollPhysics? physics,
   CurrencyPickerThemeData? theme,
 }) {

@@ -62,7 +62,7 @@ class CurrencyListView extends StatefulWidget {
     this.currencyFilter,
     this.showSearchField = true,
     this.searchHint,
-    this.showCurrencyCode = false,
+    this.showCurrencyCode = true,
     this.showCurrencyName = true,
     this.showFlag = true,
     this.physics,
@@ -101,6 +101,8 @@ class _CurrencyListViewState extends State<CurrencyListView> {
 
     if (widget.favorite != null) {
       _favoriteList = _currencyService.findCurrenciesByCode(widget.favorite!);
+      _currencyList
+          .removeWhere((element) => _favoriteList!.contains(element));
     }
 
     _filteredList.addAll(_currencyList);
@@ -144,14 +146,15 @@ class _CurrencyListViewState extends State<CurrencyListView> {
           child: ListView(
             physics: widget.physics,
             children: [
-              if (_favoriteList != null) ...[
+              //length condition is added to avoid favorites listing while searching
+              if (_favoriteList != null && _currencyList.length==_filteredList.length) ...[
                 ..._favoriteList!
                     .map<Widget>((currency) => _listRow(currency,true))
                     .toList(),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Divider(thickness: 1),
-                ),
+                // const Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 20.0),
+                //   child: Divider(thickness: 1),
+                // ),
               ],
               ..._filteredList
                   .map<Widget>((currency) => _listRow(currency,false))
@@ -175,10 +178,10 @@ class _CurrencyListViewState extends State<CurrencyListView> {
       // so the ripple effect of InkWell will show on tap
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {
-          widget.onSelect(currency);
-          // Navigator.pop(context);
-        },
+        // onTap: () {
+        //   widget.onSelect(currency);
+        //   // Navigator.pop(context);
+        // },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 9.0, horizontal: 8.0),
           child: Row(
@@ -216,22 +219,26 @@ class _CurrencyListViewState extends State<CurrencyListView> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                // child: Text(
-                //   currency.symbol,
-                //   style: const TextStyle(fontSize: 18),
-                // ),
-                child: Checkbox(
-                  checkColor: Colors.lightBlueAccent,
-                  value: isChecked,
-                  onChanged: (bool? newvalue) {
-                    setState(() {
-                      isChecked = newvalue!;
-                    });
-                    print(isChecked);
-                  },
-                ),
+              StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    // child: Text(
+                    //   currency.symbol,
+                    //   style: const TextStyle(fontSize: 18),
+                    // ),
+                    child: Checkbox(
+                      checkColor: Colors.lightBlueAccent,
+                      value: isChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          isChecked = value!;
+                          widget.onSelect(currency);
+                        });
+                      },
+                    ),
+                  );
+                }
               ),
             ],
           ),

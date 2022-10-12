@@ -10,14 +10,14 @@ class MyApp extends StatelessWidget {
       title: 'Demo for currency picker package',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const HomePage(),
+      home:  HomePage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
+  // const HomePage({Key? key}) : super(key: key);
+  List<String> favorite = ['USD'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,9 +32,14 @@ class HomePage extends StatelessWidget {
               showCurrencyName: true,
               showCurrencyCode: true,
               onSelect: (Currency currency) {
-                print('Select currency: ${currency.name}');
+                if(favorite.contains(currency.code)){
+                  favorite.remove(currency.code);
+                }
+                else{
+                  favorite.add(currency.code);
+                };
               },
-              favorite: ['SEK'],
+              favorite: favorite,
             );
           },
           child: const Text('Show currency picker'),
