@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatelessWidget {
   // const HomePage({Key? key}) : super(key: key);
-  List<String> favorite = ['USD'];
+  // List<String> favorite = ['USD'];
+  Map<String,String> favorite = {'USD':"United States Dollar"};
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,11 +33,11 @@ class HomePage extends StatelessWidget {
               showCurrencyName: true,
               showCurrencyCode: true,
               onSelect: (Currency currency) {
-                if(favorite.contains(currency.code)){
+                if(favorite.containsKey(currency.code)){
                   favorite.remove(currency.code);
                 }
                 else{
-                  favorite.add(currency.code);
+                  favorite[currency.code]=currency.name;
                 };
               },
               favorite: favorite,

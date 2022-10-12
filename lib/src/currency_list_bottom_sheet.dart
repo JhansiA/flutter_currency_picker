@@ -7,7 +7,8 @@ import 'currency_picker_theme_data.dart';
 void showCurrencyListBottomSheet({
   required BuildContext context,
   required ValueChanged<Currency> onSelect,
-  List<String>? favorite,
+  // List<String>? favorite,
+  Map<String,String>? favorite,
   List<String>? currencyFilter,
   String? searchHint,
   bool showSearchField = true,
@@ -46,7 +47,7 @@ void showCurrencyListBottomSheet({
 Widget _builder(
   BuildContext context,
   ValueChanged<Currency> onSelect,
-  List<String>? favorite,
+  Map<String,String>? favorite,
   List<String>? currencyFilter,
   String? searchHint,
   ScrollPhysics? physics,

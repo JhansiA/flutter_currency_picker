@@ -15,7 +15,7 @@ class CurrencyListView extends StatefulWidget {
   /// The Currencies that will appear at the top of the list (optional).
   ///
   /// It takes a list of Currency code.
-  final List<String>? favorite;
+  final Map<String,String>? favorite;
 
   /// Can be used to uses filter the Currency list (optional).
   ///
@@ -100,7 +100,9 @@ class _CurrencyListViewState extends State<CurrencyListView> {
     }
 
     if (widget.favorite != null) {
-      _favoriteList = _currencyService.findCurrenciesByCode(widget.favorite!);
+      // _favoriteList = _currencyService.findCurrenciesByCode(widget.favorite?.keys.toList());
+      List<String> currencycodelist = widget.favorite!.entries.map((e) => e.key).toList();
+      _favoriteList = _currencyService.findCurrenciesByCode(currencycodelist);
       _currencyList
           .removeWhere((element) => _favoriteList!.contains(element));
     }
@@ -177,71 +179,65 @@ class _CurrencyListViewState extends State<CurrencyListView> {
       // Add Material Widget with transparent color
       // so the ripple effect of InkWell will show on tap
       color: Colors.transparent,
-      child: InkWell(
-        // onTap: () {
-        //   widget.onSelect(currency);
-        //   // Navigator.pop(context);
-        // },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 9.0, horizontal: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Expanded(
-                child: Row(
-                  children: [
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 9.0, horizontal: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+              child: Row(
+                children: [
+                  const SizedBox(width: 15),
+                  if (widget.showFlag) ...[
+                    _flagWidget(currency),
                     const SizedBox(width: 15),
-                    if (widget.showFlag) ...[
-                      _flagWidget(currency),
-                      const SizedBox(width: 15),
-                    ],
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (widget.showCurrencyCode) ...[
-                            Text(
-                              currency.code,
-                              style: _titleTextStyle,
-                            ),
-                          ],
-                          if (widget.showCurrencyName) ...[
-                            Text(
-                              currency.name,
-                              style: widget.showCurrencyCode
-                                  ? _subtitleTextStyle
-                                  : _titleTextStyle,
-                            ),
-                          ]
-                        ],
-                      ),
-                    ),
                   ],
-                ),
-              ),
-              StatefulBuilder(
-                builder: (BuildContext context, StateSetter setState) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    // child: Text(
-                    //   currency.symbol,
-                    //   style: const TextStyle(fontSize: 18),
-                    // ),
-                    child: Checkbox(
-                      checkColor: Colors.lightBlueAccent,
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                          widget.onSelect(currency);
-                        });
-                      },
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (widget.showCurrencyCode) ...[
+                          Text(
+                            currency.code,
+                            style: _titleTextStyle,
+                          ),
+                        ],
+                        if (widget.showCurrencyName) ...[
+                          Text(
+                            currency.name,
+                            style: widget.showCurrencyCode
+                                ? _subtitleTextStyle
+                                : _titleTextStyle,
+                          ),
+                        ]
+                      ],
                     ),
-                  );
-                }
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  // child: Text(
+                  //   currency.symbol,
+                  //   style: const TextStyle(fontSize: 18),
+                  // ),
+                  child: Checkbox(
+                    checkColor: Colors.lightBlueAccent,
+                    value: isChecked,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        isChecked = value!;
+                        widget.onSelect(currency);
+                      });
+                    },
+                  ),
+                );
+              }
+            ),
+          ],
         ),
       ),
     );
