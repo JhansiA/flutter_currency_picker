@@ -8,7 +8,7 @@ void showCurrencyListBottomSheet({
   required BuildContext context,
   required ValueChanged<Currency> onSelect,
   // List<String>? favorite,
-  Map<String,String>? favorite,
+  Map<String,dynamic>? favorite,
   List<String>? currencyFilter,
   String? searchHint,
   bool showSearchField = true,
@@ -47,7 +47,7 @@ void showCurrencyListBottomSheet({
 Widget _builder(
   BuildContext context,
   ValueChanged<Currency> onSelect,
-  Map<String,String>? favorite,
+  Map<String,dynamic>? favorite,
   List<String>? currencyFilter,
   String? searchHint,
   ScrollPhysics? physics,

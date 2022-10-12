@@ -14,7 +14,7 @@ export 'package:currency_picker/src/currency_utils.dart';
 void showCurrencyPicker({
   required BuildContext context,
   required ValueChanged<Currency> onSelect,
-  Map<String,String>? favorite,
+  Map<String,dynamic>? favorite,
   List<String>? currencyFilter,
   String? searchHint,
   bool showSearchField = true,

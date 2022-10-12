@@ -15,7 +15,7 @@ class CurrencyListView extends StatefulWidget {
   /// The Currencies that will appear at the top of the list (optional).
   ///
   /// It takes a list of Currency code.
-  final Map<String,String>? favorite;
+  final Map<String,dynamic>? favorite;
 
   /// Can be used to uses filter the Currency list (optional).
   ///
