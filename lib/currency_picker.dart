@@ -11,7 +11,7 @@ export 'package:currency_picker/src/currency_picker_theme_data.dart';
 export 'package:currency_picker/src/currency_service.dart';
 export 'package:currency_picker/src/currency_utils.dart';
 
-void showCurrencyPicker({
+Future<dynamic> showCurrencyPicker({
   required BuildContext context,
   required ValueChanged<Currency> onSelect,
   Map<String,dynamic>? favorite,
@@ -28,7 +28,7 @@ void showCurrencyPicker({
     showCurrencyName || showCurrencyCode,
     'showCurrencyName and showCurrencyCode cannot be both false',
   );
-  currency_list.showCurrencyListBottomSheet(
+  return currency_list.showCurrencyListBottomSheet(
     context: context,
     onSelect: onSelect,
     showSearchField: showSearchField,
@@ -47,11 +47,11 @@ void showCurrencyPicker({
   'Use showCurrencyPicker instead. '
   'This feature was deprecated after v1.0.2.',
 )
-void showCurrencyListBottomSheet({
+Future<dynamic> showCurrencyListBottomSheet({
   required BuildContext context,
   required ValueChanged<Currency> onSelect,
 }) {
-  showCurrencyPicker(
+  return showCurrencyPicker(
     context: context,
     onSelect: onSelect,
   );
